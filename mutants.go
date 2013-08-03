@@ -61,6 +61,19 @@ func (r roughCopyVisitor) VisitBinaryOperation(op byte, lhsv, rhsv expressions.E
 	return Mutant{expressions.NewBinaryOperation(op, left, right)}, true
 }
 
+func NewConstant(f expressions.Float) Mutant{
+	return Mutant{expressions.NewConstant(f)}
+}
+
+func NewVariableRef(s string) Mutant{
+	return Mutant{expressions.NewVariableRef(s)}
+}
+
+/* Obtain a new binary expression, with the given operator ('+', '-', '*', or '/') and the given left and righthand sides. */
+func NewBinaryOperation(op byte, e1,e2 expressions.ExpressionLike) Mutant {
+	return Mutant{expressions.NewBinaryOperation(op,e1,e2)}
+}
+
 func (mut Mutant) RoughCopy(accuracy expressions.Float, m map[string]expressions.Float) (Mutant, bool) {
 	v := roughCopyVisitor{accuracy, m}
 	answerv, okay := mut.Visit(v)
