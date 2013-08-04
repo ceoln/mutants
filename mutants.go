@@ -20,7 +20,6 @@ func (r roughCopyVisitor) VisitConstant(value expressions.Float) (expressions.Ex
 		return Mutant{expressions.NewConstant(value)}, true
 	} else {
 		if expressions.Float(rand.Float32()) < 0.5 {
-
 			return Mutant{expressions.NewRandomConstant()}, true
 		} else {
 			return Mutant{expressions.NewRandomExpression(r.m)}, true
@@ -68,6 +67,10 @@ func (r roughCopyVisitor) VisitBinaryOperation(op byte, lhsv, rhsv expressions.E
 		return Zero, false
 	}
 	return Mutant{expressions.NewBinaryOperation(op, left, right)}, true
+}
+
+func NewRandomMutant(m map[string]expressions.Float) Mutant {
+	return Mutant{expressions.NewRandomExpression(m)}
 }
 
 func NewConstant(f expressions.Float) Mutant {
